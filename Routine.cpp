@@ -46,7 +46,7 @@ int main()
 {
     int numRoutines = 0;
     Routine* routines = getRoutines(numRoutines);
-
+    
     time_t current = time(0);
     tm *local = localtime(&current);
     int day = local->tm_wday;
@@ -103,7 +103,7 @@ Routine* getRoutines(int &numRoutines)
 
     string line;
 
-    while(getline(inFile, line, '\0'))
+    while(getline(inFile, line))
     {
         numRoutines++;
     }
@@ -113,7 +113,7 @@ Routine* getRoutines(int &numRoutines)
 
     Routine* routines = new Routine[numRoutines];
 
-    for(int i = 0; getline(inFile, line, '\0'); i++)
+    for(int i = 0; getline(inFile, line); i++)
     {
         routines[i].title = line;
     }
