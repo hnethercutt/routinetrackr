@@ -39,12 +39,13 @@ struct Routine
     Node* steps;
 };
 
-Routine* getRoutines();
+Routine* getRoutines(int &numRoutines);
 void newRoutine();
 
 int main()
 {
-    Routine* routines = getRoutines();
+    int numRoutines = 0;
+    Routine* routines = getRoutines(numRoutines);
 
     time_t current = time(0);
     tm *local = localtime(&current);
@@ -90,7 +91,7 @@ int main()
     return 0;
 }
 
-Routine* getRoutines()
+Routine* getRoutines(int &numRoutines)
 {
     ifstream inFile("../output/Routines.txt");
 
@@ -100,7 +101,6 @@ Routine* getRoutines()
         exit(1);
     }
 
-    int numRoutines = 0;
     string line;
 
     while(getline(inFile, line, '\0'))
