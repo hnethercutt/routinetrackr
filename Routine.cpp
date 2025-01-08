@@ -1,6 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include <string>
+
 using namespace std;
 
 const string daysOfWeek[] =
@@ -14,15 +16,13 @@ const string daysOfWeek[] =
     "Saturday"
 };
 
-const int MAXCHARS = 150;
-
 struct Step
 {
-    bool daily = true; 
-    bool repeat = true; 
-    char description[MAXCHARS]; 
-    char* days; 
+    string description;
     int frequency; 
+    bool daily = true; 
+    bool weekly = true;  
+    int days; 
 };
 
 typedef Step ListItemType;
@@ -35,7 +35,7 @@ struct Node
 
 struct Routine
 {
-    string title[MAXCHARS]; 
+    string title; 
     Node* steps;
 };
 
@@ -44,7 +44,7 @@ int main()
     time_t current = time(0);
     tm *local = localtime(&current);
     int day = local->tm_wday;
-    
+
     int option = 0;
 
     while(option != 5)
