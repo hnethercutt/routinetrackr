@@ -40,6 +40,7 @@ struct Routine
 };
 
 Routine* getRoutines();
+void newRoutine();
 
 int main()
 {
@@ -70,6 +71,7 @@ int main()
         switch(option)
         {
             case 1:
+                newRoutine();
                 break;
             case 2:
                 break;
@@ -94,7 +96,7 @@ Routine* getRoutines()
 
     if(!inFile)
     {
-        cerr << "ERROR: Input file cannot be opened.";
+        cerr << "ERROR: File cannot be opened.";
         exit(1);
     }
 
@@ -119,4 +121,34 @@ Routine* getRoutines()
     inFile.close();
 
     return routines;
+}
+
+void newRoutine()
+{
+    ofstream outFile("Routines.txt", ios::app);
+
+    if(!outFile)
+    {
+        cerr << "ERROR: File cannot be opened.";
+    }
+
+    string name;
+    char choice;
+    bool newRoutine = true;
+    while(newRoutine)
+    
+    {
+        cout << "Please enter a name for your new routine: ";
+        cin >> name;
+
+        outFile << name << "\n";
+
+        cout << "Create another routine? Enter Y for Yes or N for No: ";
+        cin >> choice;
+
+        if(choice == 'N' || choice == 'n')
+        {
+            newRoutine = false;
+        }
+    }
 }
