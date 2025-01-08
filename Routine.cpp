@@ -39,8 +39,12 @@ struct Routine
     Node* steps;
 };
 
+Routine* getRoutines();
+
 int main()
 {
+    Routine* routines = getRoutines();
+
     time_t current = time(0);
     tm *local = localtime(&current);
     int day = local->tm_wday;
@@ -82,4 +86,37 @@ int main()
     }
 
     return 0;
+}
+
+Routine* getRoutines()
+{
+    ifstream inFile("../output/Routines.txt");
+
+    if(!inFile)
+    {
+        cerr << "ERROR: Input file cannot be opened.";
+        exit(1);
+    }
+
+    int numRoutines = 0;
+    string line;
+
+    while(getline(inFile, line, '\0'))
+    {
+        numRoutines++;
+    }
+
+    inFile.clear();
+    inFile.seekg(0, ios::beg);
+
+    Routine* routines = new Routine[numRoutines];
+
+    for(int i = 0; getline(inFile, line, '\0'); i++)
+    {
+        routines[i].title = line;
+    }
+
+    inFile.close();
+
+    return routines;
 }
