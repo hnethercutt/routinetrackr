@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <cstring>
 #include <string>
 
 using namespace std;
@@ -16,13 +17,15 @@ const string daysOfWeek[] =
     "Saturday"
 };
 
+const int MAXCHARS = 150;
+
 struct Step
 {
-    string description;
-    int frequency; 
-    bool daily = true; 
-    bool weekly = true;  
-    int days; 
+    char description[MAXCHARS];
+    int frequency;
+    bool daily = true;
+    bool weekly = true;
+    int days;
 };
 
 typedef Step ListItemType;
@@ -35,31 +38,33 @@ struct Node
 
 struct Routine
 {
-    string title; 
+    string title;
     Node* steps;
 };
 
-Routine* getRoutines(int &numRoutines);
+Routine* getRoutines(int& numRoutines);
 void newRoutine();
 
 int main()
 {
     int numRoutines = 0;
+
     Routine* routines = getRoutines(numRoutines);
-    
+
     time_t current = time(0);
-    tm *local = localtime(&current);
-    int day = local->tm_wday;
+    tm local;
+    localtime_s(&local, &current);
+    int day = local.tm_wday;
 
     int option = 0;
 
-    while(option != 5)
+    while (option != 5)
     {
-        cout << "Today's Date Is: " 
-             << daysOfWeek[day] << ", "
-             << 1 + local->tm_mon << "/" 
-             << local->tm_mday << "/" 
-             << 1900 + local->tm_year << endl;
+        cout << "Today's Date is "
+            << daysOfWeek[day] << ", "
+            << 1 + local.tm_mon << "/"
+            << local.tm_mday << "/"
+            << 1900 + local.tm_year << endl;
         cout << "1. Create a New Routine" << endl;
         cout << "2. View an Existing Routine" << endl;
         cout << "3. Edit an Existing Routine" << endl;
@@ -69,33 +74,33 @@ int main()
 
         cin >> option;
 
-        switch(option)
+        switch (option)
         {
-            case 1:
-                newRoutine();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            default:
-                cout << "Invalid input\n";
-                break;
+        case 1:
+            newRoutine();
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        default:
+            cout << "Invalid input\n";
+            break;
         }
     }
 
     return 0;
 }
 
-Routine* getRoutines(int &numRoutines)
+Routine* getRoutines(int& numRoutines)
 {
-    ifstream inFile("../output/Routines.txt");
+    ifstream inFile("Routines.txt");
 
-    if(!inFile)
+    if (!inFile)
     {
         cerr << "ERROR: File cannot be opened.";
         exit(1);
@@ -103,7 +108,7 @@ Routine* getRoutines(int &numRoutines)
 
     string line;
 
-    while(getline(inFile, line))
+    while (getline(inFile, line))
     {
         numRoutines++;
     }
@@ -113,7 +118,7 @@ Routine* getRoutines(int &numRoutines)
 
     Routine* routines = new Routine[numRoutines];
 
-    for(int i = 0; getline(inFile, line); i++)
+    for (int i = 0; getline(inFile, line); i++)
     {
         routines[i].title = line;
     }
@@ -127,7 +132,7 @@ void newRoutine()
 {
     ofstream outFile("Routines.txt", ios::app);
 
-    if(!outFile)
+    if (!outFile)
     {
         cerr << "ERROR: File cannot be opened.";
     }
@@ -135,8 +140,8 @@ void newRoutine()
     string name;
     char choice;
     bool newRoutine = true;
-    while(newRoutine)
-    
+    while (newRoutine)
+
     {
         cout << "Please enter a name for your new routine: ";
         cin >> name;
@@ -146,7 +151,7 @@ void newRoutine()
         cout << "Create another routine? Enter Y for Yes or N for No: ";
         cin >> choice;
 
-        if(choice == 'N' || choice == 'n')
+        if (choice == 'N' || choice == 'n')
         {
             newRoutine = false;
         }
