@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// This will be used later on to convert digits in routine file
 const string daysOfWeek[] =
 {
 	"Sunday",
@@ -51,6 +52,7 @@ int main()
 	Routine* routines = getRoutines(numRoutines);
 	getSteps(routines, numRoutines);
 
+	// For display
 	time_t current = time(0);
 	tm local;
 	localtime_s(&local, &current);
@@ -144,6 +146,7 @@ void getSteps(Routine* routines, int numRoutines)
 	{
 		string description;
 
+		// Loads all step information into each routine
 		while (getline(inFile, description) && description != "*")
 		{
 			Node* newNode = new Node;
@@ -152,6 +155,7 @@ void getSteps(Routine* routines, int numRoutines)
 				>> newNode->item.daily
 				>> newNode->item.weekly
 				>> newNode->item.days;
+			// Prevents next description from being ignored
 			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 
 			newNode->item.description = description;
@@ -163,6 +167,7 @@ void getSteps(Routine* routines, int numRoutines)
 
 void newRoutine()
 {
+	// Text added to the file will be appended 
 	ofstream outFile("Routines.txt", ios::app);
 
 	if (!outFile)
@@ -170,12 +175,13 @@ void newRoutine()
 		cerr << "ERROR: File cannot be opened.";
 	}
 
-	string input;
 	bool newRoutine = true;
+	string input;
 
 	while (newRoutine)
 	{
 		cout << "Please enter a name for your new routine: ";
+		// Ensures any input with whitespace will be read completely
 		cin.ignore();
 		getline(cin, input);
 
@@ -183,6 +189,7 @@ void newRoutine()
 
 		bool newStep = true;
 
+		// Gets all details for the current step from the user
 		while (newStep)
 		{
 			cout << "Add a step to this routine? Enter Y for Yes or N for No: ";
@@ -190,8 +197,6 @@ void newRoutine()
 
 			if (input == "Y" || input == "y")
 			{
-				newStep = (input == "Y" || input == "y");
-
 				cout << "Please enter a description for this step: ";
 
 				cin.ignore();
@@ -201,10 +206,12 @@ void newRoutine()
 
 				int numInput = 0;
 
+				// Error handling. Maintains an infinite loop until the user gives valid input
 				while (true)
 				{
 					cout << "How many times per day should this step be completed? Please enter a number: ";
 
+					// Valid input written to file
 					if (cin >> numInput && numInput > 0)
 					{
 						outFile << numInput << "\n";
@@ -212,6 +219,7 @@ void newRoutine()
 					}
 					else
 					{
+						// Clears the buffer for next input attempt
 						cin.clear();
 						cin.ignore(numeric_limits<streamsize>::max(), '\n');
 						cout << "Invalid input. Please try again.\n";
