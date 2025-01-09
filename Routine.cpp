@@ -170,23 +170,119 @@ void newRoutine()
 		cerr << "ERROR: File cannot be opened.";
 	}
 
-	string name;
-	char choice;
+	string input;
 	bool newRoutine = true;
-	while (newRoutine)
 
+	while (newRoutine)
 	{
 		cout << "Please enter a name for your new routine: ";
-		cin >> name;
+		cin.ignore();
+		getline(cin, input);
 
-		outFile << name << "\n";
+		outFile << input << "\n";
 
-		cout << "Create another routine? Enter Y for Yes or N for No: ";
-		cin >> choice;
+		bool newStep = true;
 
-		if (choice == 'N' || choice == 'n')
+		while (newStep)
 		{
-			newRoutine = false;
+			cout << "Add a step to this routine? Enter Y for Yes or N for No: ";
+			cin >> input;
+
+			if (input == "Y" || input == "y")
+			{
+				newStep = (input == "Y" || input == "y");
+
+				cout << "Please enter a description for this step: ";
+
+				cin.ignore();
+				getline(cin, input);
+
+				outFile << input << "\n";
+
+				int numInput = 0;
+
+				while (true)
+				{
+					cout << "How many times per day should this step be completed? Please enter a number: ";
+
+					if (cin >> numInput && numInput > 0)
+					{
+						outFile << numInput << "\n";
+						break;
+					}
+					else
+					{
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						cout << "Invalid input. Please try again.\n";
+					}
+				}
+
+				while (true)
+				{
+					cout << "Repeat this step weekly? Enter Y for Yes or N for No: ";
+					cin >> input;
+
+					if (input == "Y" || input == "y")
+					{
+						outFile << "1\n";
+						break;
+					}
+					else if (input == "N" || input == "n")
+					{
+						outFile << "0\n";
+						break;
+					}
+					else
+					{
+						cout << "Invalid input. Please try again.\n";
+					}
+				}
+
+				while (true)
+				{
+					cout << "Repeat this step daily? Enter Y for Yes or N for No: ";
+					cin >> input;
+
+					if (input == "Y" || input == "y")
+					{
+						outFile << "1\n";
+						break;
+					}
+					else if (input == "N" || input == "n")
+					{
+						outFile << "0\n";
+
+						cout << "One which days should this step be repeated?" << endl
+							<< "1. Sunday" << endl
+							<< "2. Monday" << endl
+							<< "3. Tuesday" << endl
+							<< "4. Wednesday" << endl
+							<< "5. Thursday" << endl
+							<< "6. Friday" << endl
+							<< "7. Saturday" << endl
+							<< "To choose multiple days, enter the numbers together (ex: 123): ";
+						cin >> numInput;
+
+						outFile << numInput;
+						break;
+					}
+				}
+			}
+			else if (input == "N" || input == "n")
+			{
+				newStep = false;
+			}
+			else
+			{
+				cout << "Invalid input. Please try again.\n";
+				continue;
+			}
 		}
+		cout << "Routine created!" << endl
+			 << "Create another routine? Enter Y for Yes or N for No: ";
+		cin >> input;
+
+		newRoutine = (input == "Y" || input == "y");
 	}
 }
