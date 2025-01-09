@@ -20,10 +20,10 @@ const string daysOfWeek[] =
 struct Step
 {
 	string description;
-	int frequency;
+	int frequency = 0;
 	bool daily = true;
 	bool weekly = true;
-	int days;
+	int days = 0;
 };
 
 typedef Step ListItemType;
@@ -31,13 +31,13 @@ typedef Step ListItemType;
 struct Node
 {
 	ListItemType item;
-	Node* next;
+	Node* next = NULL;
 };
 
 struct Routine
 {
 	string title;
-	Node* steps;
+	Node* steps = NULL;
 };
 
 Routine* getRoutines(int& numRoutines);
@@ -60,6 +60,8 @@ int main()
 
 	while (option != 5)
 	{
+		system("cls");
+
 		cout << "Today's Date is "
 			<< daysOfWeek[day] << ", "
 			<< 1 + local.tm_mon << "/"
@@ -118,9 +120,9 @@ Routine* getRoutines(int& numRoutines)
 
 	Routine* routines = new Routine[numRoutines];
 
-	for (int i = 0; getline(inFile, line); i++)
+	for (int i = 0; i < numRoutines; i++)
 	{
-		routines[i].title = line;
+		getline(inFile, routines[i].title);
 	}
 
 	inFile.close();
