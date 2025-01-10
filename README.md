@@ -1,4 +1,4 @@
-# routine-tracker
+# routinetrackr
 
 A console app that will allow you to create and keep track of your daily routines, as well as view your stats
 
