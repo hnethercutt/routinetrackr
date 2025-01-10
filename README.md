@@ -1,6 +1,6 @@
 # routine-tracker
 
-A console app that will allow you to create and keep track of your daily schedules, as well as view your stats
+A console app that will allow you to create and keep track of your daily routines, as well as view your stats
 
 <!--TO-DO LIST-->
 ## TO DO LIST
