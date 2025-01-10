@@ -337,6 +337,7 @@ void viewTitles(Routine* routines, int numRoutines)
 	}
 }
 
+// Need to fix this because view all isn't working
 void viewSteps(Routine* routines, int numRoutines, int option)
 {
 	system("cls");
@@ -415,10 +416,11 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << endl << "Title Changed" << endl;
 			break;
 		case 2:
+			/* Need to finish this
 			viewSteps(routines, numRoutines, option);
 
 			cout << "Which step would you like to edit?: " << endl;
-			cin >> stepOption;
+			cin >> stepOption;*/
 			break;
 		case 3:
 			break;
