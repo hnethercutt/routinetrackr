@@ -44,6 +44,7 @@ struct Routine
 Routine* getRoutines(int& numRoutines);
 void getSteps(Routine* routines);
 void newRoutine();
+void viewRoutine(Routine* routines, int numRoutines);
 
 int main()
 {
@@ -83,6 +84,7 @@ int main()
 			newRoutine();
 			break;
 		case 2:
+			viewRoutine(routines, numRoutines);
 			break;
 		case 3:
 			break;
@@ -289,4 +291,70 @@ void newRoutine()
 
 		newRoutine = (input == "Y" || input == "y");
 	}
+}
+
+void viewRoutine(Routine* routines, int numRoutines)
+{
+	int option;
+	int i;
+
+	for (i = 0; i < numRoutines; i++)
+	{
+		cout << (i + 1) << ". " << routines[i].title << endl;
+	}
+
+	cout << (i + 1) << ". " << "View All" << endl
+		 << "Select a Routine to View: ";
+
+	cin >> option;
+
+	if (option == (i + 1))
+	{
+		// Add code for option chosen to view all
+	}
+	else if (option > 0 && option <= i)
+	{
+		Node* current = routines[option - 1].steps;
+		Node* temp = current;
+
+		cout << routines[option - 1].title << endl;
+
+		// This works only for one step routines, next steps are NULL. Need to fix that
+		if (current == NULL)
+		{
+			cout << "This routine has no steps.";
+		}
+		else
+		{
+			while (current != NULL)
+			{
+				cout << current->item.description << endl
+					<< "To be completed " << current->item.frequency << " times per day." << endl
+					<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
+					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: \n") << endl;
+
+				/* This needs to be fixed as well
+				if (current->item.daily == 0)
+				{
+					int day;
+
+					while (temp->item.days != 0)
+					{
+						int day = temp->item.days % 10;
+						cout << daysOfWeek[day - 1] << endl;
+						temp->item.days /= 10;
+					}
+				}
+				*/
+
+				current = current->next;
+				temp = current;
+			}
+
+			cout << endl;
+		}
+	}
+
+	cout << "Enter 0 to Return to the Main Menu: ";
+	cin >> option;
 }
