@@ -143,23 +143,30 @@ void getSteps(Routine* routines)
 		exit(1);
 	}
 
+	int routineIndex = 0;
 	string description;
 
-	for (int i = 0; (getline(inFile, description) && description != "*"); i++)
+	while(getline(inFile, description) && description != "*")
 	{
 		// Loads all step information into each routine
 		Node* newNode = new Node;
 
 		inFile >> newNode->item.frequency
-			>> newNode->item.daily
-			>> newNode->item.weekly
-			>> newNode->item.days;
-		// Prevents next description from being ignored
+			   >> newNode->item.daily
+			   >> newNode->item.weekly
+			   >> newNode->item.days;
+		// Prevents next description from being ignored/Skips to next line
 		inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 
 		newNode->item.description = description;
-		newNode->next = routines[i].steps;
-		routines[i].steps = newNode;
+		newNode->next = routines[routineIndex].steps;
+		routines[routineIndex].steps = newNode;
+
+		// Moves to the next step if there is one
+		if (!inFile.eof() && routines[routineIndex].steps->next != NULL)
+		{
+			routineIndex++;
+		}
 	}
 }
 
@@ -319,7 +326,7 @@ void viewRoutine(Routine* routines, int numRoutines)
 
 		cout << routines[option - 1].title << endl;
 
-		// This works only for one step routines, next steps are NULL. Need to fix that
+		// Displays each step of the routine(s)
 		if (current == NULL)
 		{
 			cout << "This routine has no steps.";
@@ -350,8 +357,6 @@ void viewRoutine(Routine* routines, int numRoutines)
 				current = current->next;
 				temp = current;
 			}
-
-			cout << endl;
 		}
 	}
 
