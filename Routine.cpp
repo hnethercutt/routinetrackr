@@ -46,6 +46,7 @@ void newRoutine();
 void viewTitles(Routine* routines, int numRoutines);
 void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
+void editRoutine(Routine* routines, int numRoutines);
 
 int main()
 {
@@ -88,6 +89,7 @@ int main()
 			viewRoutine(routines, numRoutines);
 			break;
 		case 3:
+			editRoutine(routines, numRoutines);
 			break;
 		case 4:
 			break;
@@ -351,9 +353,11 @@ void viewSteps(Routine* routines, int numRoutines, int option)
 	}
 	else
 	{
+		int stepCount = 1;
+
 		while (current != NULL)
 		{
-			cout << current->item.description << endl
+			cout << stepCount << ". " << current->item.description << endl
 				<< "To be completed " << current->item.frequency << " times per day." << endl
 				<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
 				<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: ") << endl;
@@ -370,7 +374,61 @@ void viewSteps(Routine* routines, int numRoutines, int option)
 				}
 			}
 			current = current->next;
+			stepCount++;
 			cout << endl;
 		}
 	}
+}
+
+void editRoutine(Routine* routines, int numRoutines)
+{
+	int option;
+	int editOption;
+	int stepOption;
+	string newTitle;
+
+	cout << "Which routine would you like to edit?" << endl;
+	viewTitles(routines, numRoutines);
+
+	cout << "Choose an Option: ";
+	cin >> option;
+
+	system("cls");
+	
+	cout << "1. Routine Title" << endl
+		<< "2. Step Description" << endl
+		<< "3. Step Frequency" << endl
+		<< "4. Weekly Repetition" << endl
+		<< "5. Daily Repetition" << endl
+		<< "6. Days to Repeat" << endl
+		<< "7. Return to Main Menu" << endl
+		<< "Choose an Option to Edit: ";
+	cin >> editOption;
+
+	if (editOption != 7)
+	{
+		switch (editOption)
+		{
+		case 1:
+			cout << "Enter a New Title: ";
+			cin >> routines[option - 1].title;
+			cout << endl << "Title Changed" << endl;
+			break;
+		case 2:
+			viewSteps(routines, numRoutines, option);
+
+			cout << "Which step would you like to edit?: " << endl;
+			cin >> stepOption;
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6: break;
+
+		}
+	}
+
 }
