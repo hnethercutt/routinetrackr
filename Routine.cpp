@@ -6,7 +6,6 @@
 
 using namespace std;
 
-// This will be used later on to convert digits in routine file
 const string daysOfWeek[] =
 {
 	"Sunday",
@@ -44,6 +43,8 @@ struct Routine
 Routine* getRoutines(int& numRoutines);
 void getSteps(Routine* routines);
 void newRoutine();
+void viewTitles(Routine* routines, int numRoutines);
+void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
 
 int main()
@@ -303,62 +304,73 @@ void newRoutine()
 void viewRoutine(Routine* routines, int numRoutines)
 {
 	int option;
-	int i;
 
-	for (i = 0; i < numRoutines; i++)
-	{
-		cout << (i + 1) << ". " << routines[i].title << endl;
-	}
+	viewTitles(routines, numRoutines);
 
-	cout << (i + 1) << ". " << "View All" << endl
-		 << "Select a Routine to View: ";
-
+	cout << (numRoutines + 1) << ". " << "View All" << endl
+		 << "Select a Routine: ";
 	cin >> option;
 
-	system("cls");
-
-	if (option == (i + 1))
+	if (option > 0 && option < numRoutines + 1)
 	{
-		// Add code for option chosen to view all
+		viewSteps(routines, numRoutines, option);
 	}
-	else if (option > 0 && option <= i)
+	else if (option = numRoutines + 1)
 	{
-		Node* current = routines[option - 1].steps;
-		Node* temp = current;
-
-		cout << "Routine: " << routines[option - 1].title << endl;
-
-		// Displays each step of the routine(s)
-		if (current == NULL)
+		for (int i = 1; i <= numRoutines; i++)
 		{
-			cout << "This routine has no steps." << endl;
-		}
-		else
-		{
-			while (current != NULL)
-			{
-				cout << current->item.description << endl
-					<< "To be completed " << current->item.frequency << " times per day." << endl
-					<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
-					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: ") << endl;
-
-				if (current->item.daily == 0)
-				{
-					int temp = current->item.days;
-
-					while (temp != 0)
-					{
-						int day = temp % 10;
-						cout << daysOfWeek[day - 1] << endl;
-						temp /= 10;
-					}
-				}
-				current = current->next;
-				cout << endl;
-			}
+			viewSteps(routines, numRoutines, i);
 		}
 	}
 
 	cout << "Enter 0 to Return to the Main Menu: ";
 	cin >> option;
+}
+
+void viewTitles(Routine* routines, int numRoutines)
+{
+	for (int i = 0; i < numRoutines; i++)
+	{
+		cout << (i + 1) << ". " << routines[i].title << endl;
+	}
+}
+
+void viewSteps(Routine* routines, int numRoutines, int option)
+{
+	system("cls");
+
+	Node* current = routines[option - 1].steps;
+	Node* temp = current;
+
+	cout << "Routine: " << routines[option - 1].title << endl;
+
+	// Displays each step of the routine(s)
+	if (current == NULL)
+	{
+		cout << "This routine has no steps." << endl;
+	}
+	else
+	{
+		while (current != NULL)
+		{
+			cout << current->item.description << endl
+				<< "To be completed " << current->item.frequency << " times per day." << endl
+				<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
+				<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: ") << endl;
+
+			if (current->item.daily == 0)
+			{
+				int temp = current->item.days;
+
+				while (temp != 0)
+				{
+					int day = temp % 10;
+					cout << daysOfWeek[day - 1] << endl;
+					temp /= 10;
+				}
+			}
+			current = current->next;
+			cout << endl;
+		}
+	}
 }
