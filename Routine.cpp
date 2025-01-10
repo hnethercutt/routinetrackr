@@ -42,7 +42,7 @@ struct Routine
 };
 
 Routine* getRoutines(int& numRoutines);
-void getSteps(Routine* routines, int numRoutines);
+void getSteps(Routine* routines);
 void newRoutine();
 
 int main()
@@ -50,9 +50,8 @@ int main()
 	int numRoutines = 0;
 
 	Routine* routines = getRoutines(numRoutines);
-	getSteps(routines, numRoutines);
+	getSteps(routines);
 
-	// For display
 	time_t current = time(0);
 	tm local;
 	localtime_s(&local, &current);
@@ -132,7 +131,7 @@ Routine* getRoutines(int& numRoutines)
 	return routines;
 }
 
-void getSteps(Routine* routines, int numRoutines)
+void getSteps(Routine* routines)
 {
 	ifstream inFile("Steps.txt");
 
@@ -142,26 +141,23 @@ void getSteps(Routine* routines, int numRoutines)
 		exit(1);
 	}
 
-	for (int i = 0; i < numRoutines; i++)
+	string description;
+
+	for (int i = 0; (getline(inFile, description) && description != "*"); i++)
 	{
-		string description;
-
 		// Loads all step information into each routine
-		while (getline(inFile, description) && description != "*")
-		{
-			Node* newNode = new Node;
+		Node* newNode = new Node;
 
-			inFile >> newNode->item.frequency
-				>> newNode->item.daily
-				>> newNode->item.weekly
-				>> newNode->item.days;
-			// Prevents next description from being ignored
-			inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+		inFile >> newNode->item.frequency
+			>> newNode->item.daily
+			>> newNode->item.weekly
+			>> newNode->item.days;
+		// Prevents next description from being ignored
+		inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 
-			newNode->item.description = description;
-			newNode->next = routines[i].steps;
-			routines[i].steps = newNode;
-		}
+		newNode->item.description = description;
+		newNode->next = routines[i].steps;
+		routines[i].steps = newNode;
 	}
 }
 
@@ -288,7 +284,7 @@ void newRoutine()
 			}
 		}
 		cout << "Routine created!" << endl
-			 << "Create another routine? Enter Y for Yes or N for No: ";
+			<< "Create another routine? Enter Y for Yes or N for No: ";
 		cin >> input;
 
 		newRoutine = (input == "Y" || input == "y");
