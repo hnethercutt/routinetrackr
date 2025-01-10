@@ -315,6 +315,8 @@ void viewRoutine(Routine* routines, int numRoutines)
 
 	cin >> option;
 
+	system("cls");
+
 	if (option == (i + 1))
 	{
 		// Add code for option chosen to view all
@@ -324,7 +326,7 @@ void viewRoutine(Routine* routines, int numRoutines)
 		Node* current = routines[option - 1].steps;
 		Node* temp = current;
 
-		cout << routines[option - 1].title << endl;
+		cout << "Routine: " << routines[option - 1].title << endl;
 
 		// Displays each step of the routine(s)
 		if (current == NULL)
@@ -338,7 +340,7 @@ void viewRoutine(Routine* routines, int numRoutines)
 				cout << current->item.description << endl
 					<< "To be completed " << current->item.frequency << " times per day." << endl
 					<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
-					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: \n") << endl;
+					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: ") << endl;
 
 				if (current->item.daily == 0)
 				{
@@ -352,6 +354,7 @@ void viewRoutine(Routine* routines, int numRoutines)
 					}
 				}
 				current = current->next;
+				cout << endl;
 			}
 		}
 	}
