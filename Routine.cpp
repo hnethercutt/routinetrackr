@@ -22,8 +22,8 @@ struct Step
 {
 	string description;
 	int frequency = 0;
-	bool daily = true;
 	bool weekly = true;
+	bool daily = true;
 	int days = 0;
 };
 
@@ -152,8 +152,8 @@ void getSteps(Routine* routines)
 		Node* newNode = new Node;
 
 		inFile >> newNode->item.frequency
-			   >> newNode->item.daily
 			   >> newNode->item.weekly
+			   >> newNode->item.daily
 			   >> newNode->item.days;
 		// Prevents next description from being ignored/Skips to next line
 		inFile.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -329,7 +329,7 @@ void viewRoutine(Routine* routines, int numRoutines)
 		// Displays each step of the routine(s)
 		if (current == NULL)
 		{
-			cout << "This routine has no steps.";
+			cout << "This routine has no steps." << endl;
 		}
 		else
 		{
@@ -340,22 +340,18 @@ void viewRoutine(Routine* routines, int numRoutines)
 					<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
 					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: \n") << endl;
 
-				/* This needs to be fixed as well
 				if (current->item.daily == 0)
 				{
-					int day;
+					int temp = current->item.days;
 
-					while (temp->item.days != 0)
+					while (temp != 0)
 					{
-						int day = temp->item.days % 10;
+						int day = temp % 10;
 						cout << daysOfWeek[day - 1] << endl;
-						temp->item.days /= 10;
+						temp /= 10;
 					}
 				}
-				*/
-
 				current = current->next;
-				temp = current;
 			}
 		}
 	}
