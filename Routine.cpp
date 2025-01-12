@@ -532,8 +532,6 @@ void editRoutine(Routine* routines, int numRoutines)
 
 void editStepDescription(Routine* routines, int stepOption, string newDes)
 {
-	int option;
-
 	Node* current = routines[stepOption - 1].steps;
 	
 	string oldDes = current->item.description;
@@ -548,8 +546,6 @@ void editStepDescription(Routine* routines, int stepOption, string newDes)
 
 void editStepFrequency(Routine* routines, int stepOption, int newFreq)
 {
-	int option;
-
 	Node* current = routines[stepOption - 1].steps;
 
 	int oldFreq = current->item.frequency;
@@ -564,8 +560,6 @@ void editStepFrequency(Routine* routines, int stepOption, int newFreq)
 
 void editStepWeekly(Routine* routines, int stepOption, int newWeekly)
 {
-	int option;
-
 	Node* current = routines[stepOption - 1].steps;
 
 	int oldWeekly = current->item.weekly;
