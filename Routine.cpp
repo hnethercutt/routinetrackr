@@ -447,7 +447,6 @@ void editRoutine(Routine* routines, int numRoutines)
 		<< "4. Weekly Repetition" << endl
 		<< "5. Daily Repetition" << endl
 		<< "6. Days to Repeat" << endl
-		<< "7. Return to Main Menu" << endl
 		<< "Choose an Option to Edit: ";
 	cin >> editOption;
 
@@ -458,7 +457,7 @@ void editRoutine(Routine* routines, int numRoutines)
 		case 1:
 			cout << "Enter a New Title: ";
 			cin >> routines[option - 1].title;
-			cout << endl << "Title Changed" << endl;
+			cout << endl << "Title Updated" << endl;
 			break;
 		case 2:
 			viewSteps(routines, numRoutines, option);
@@ -467,6 +466,7 @@ void editRoutine(Routine* routines, int numRoutines)
 			cin >> stepOption;
 
 			editStepDescription(routines, stepOption);
+			cout << endl << "Step Description Updated" << endl;
 			break;
 		case 3:
 			break;
@@ -477,6 +477,9 @@ void editRoutine(Routine* routines, int numRoutines)
 		case 6: break;
 
 		}
+
+		cout << "Enter 0 to Return to Main Menu: ";
+		cin >> option;
 	}
 }
 
@@ -498,8 +501,4 @@ void editStepDescription(Routine* routines, int stepOption)
 	}
 
 	current->item.description = newDes;
-
-	cout << endl << "Step description changed" << endl
-		<< "Enter 0 to Return to Main Menu: ";
-	cin >> option;
 }
