@@ -50,6 +50,7 @@ void viewAllRoutines(Routine* routines, int numRoutines);
 void editRoutine(Routine* routines, int numRoutines);
 void editStepDescription(Routine* routines, int stepOption, string newDes);
 void editStepFrequency(Routine* routines, int stepOption, int newFreq);
+void editStepWeekly(Routine* routines, int stepOption, int newWeekly);
 
 int main()
 {
@@ -436,6 +437,7 @@ void viewSteps(Routine* routines, int numRoutines, int option)
 
 void editRoutine(Routine* routines, int numRoutines)
 {
+	char newRep;
 	int option;
 	int editOption;
 	int stepOption;
@@ -498,6 +500,24 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << endl << "Step Frequency Updated" << endl;
 			break;
 		case 4:
+			viewSteps(routines, numRoutines, option);
+
+			cout << "Which step would you like to edit?: ";
+			cin >> stepOption;
+
+			cout << "Repeat this step weekly? Enter Y for Yes or N for No: ";
+			cin >> newRep;
+
+			if (newRep == 'Y' || newRep == 'y')
+			{
+				editStepWeekly(routines, stepOption, 1);
+			}
+			if (newRep == 'N' || newRep == 'n')
+			{
+				editStepWeekly(routines, stepOption, 0);
+			}
+
+			cout << endl << "Weekly Repeat Updated" << endl;
 			break;
 		case 5:
 			break;
@@ -540,4 +560,20 @@ void editStepFrequency(Routine* routines, int stepOption, int newFreq)
 	}
 
 	current->item.frequency = newFreq;
+}
+
+void editStepWeekly(Routine* routines, int stepOption, int newWeekly)
+{
+	int option;
+
+	Node* current = routines[stepOption - 1].steps;
+
+	int oldWeekly = current->item.weekly;
+
+	for (int i = 1; i < stepOption; i++)
+	{
+		current->next;
+	}
+
+	current->item.weekly = newWeekly;
 }
