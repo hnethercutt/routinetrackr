@@ -15,7 +15,7 @@ A console app that will allow you to create and keep track of your daily routine
 - [ ] Maybe make editing steps all in one instead of each part separately???
 - [ ] Create function for marking completion of a routine or steps
 - [ ] Create function for viewing statistics, including completion count, date range, and longest streak
-- [ ] Add more to the main menu for features not listed
+- [x] Add more to the main menu for features not listed
 - [ ] Create function to save changes (for editing)
 - [ ] Complete final testing
 - [ ] Clean up/make sure all variable names make sense/formatting is good
