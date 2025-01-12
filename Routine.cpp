@@ -66,7 +66,7 @@ int main()
 
 	int option = 0;
 
-	while (option != 5)
+	while (option != 6)
 	{
 		system("cls");
 
@@ -74,13 +74,14 @@ int main()
 			<< daysOfWeek[day] << ", "
 			<< 1 + local.tm_mon << "/"
 			<< local.tm_mday << "/"
-			<< 1900 + local.tm_year << endl;
-		cout << "1. Create a New Routine" << endl;
-		cout << "2. View an Existing Routine" << endl;
-		cout << "3. Edit an Existing Routine" << endl;
-		cout << "4. View Your Stats" << endl;
-		cout << "5. Exit" << endl;
-		cout << "Choose an Option: ";
+			<< 1900 + local.tm_year << endl
+		    << "1. Create a New Routine" << endl
+		    << "2. View an Existing Routine" << endl
+		    << "3. Edit an Existing Routine" << endl
+			<< "4. Mark a Step/Routine as Completed" << endl
+		    << "5. View Your Stats" << endl
+		    << "6. Exit" << endl
+			<< "Choose an Option: ";
 
 		cin >> option;
 
@@ -98,6 +99,8 @@ int main()
 		case 4:
 			break;
 		case 5:
+			break;
+		case 6:
 			break;
 		default:
 			cout << "Invalid input\n";
