@@ -49,6 +49,7 @@ void viewRoutine(Routine* routines, int numRoutines);
 void viewAllRoutines(Routine* routines, int numRoutines);
 void editRoutine(Routine* routines, int numRoutines);
 void editStepDescription(Routine* routines, int stepOption, string newDes);
+void editStepFrequency(Routine* routines, int stepOption, int newFreq);
 
 int main()
 {
@@ -438,6 +439,7 @@ void editRoutine(Routine* routines, int numRoutines)
 	int option;
 	int editOption;
 	int stepOption;
+	int newFreq;
 	string newTitle;
 	string newDes;
 
@@ -483,6 +485,17 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << endl << "Step Description Updated" << endl;
 			break;
 		case 3:
+			viewSteps(routines, numRoutines, option);
+
+			cout << "Which step would you like to edit?: ";
+			cin >> stepOption;
+
+			cout << "Enter the New Step Frequency: ";
+			cin.ignore();
+			cin >> newFreq;
+
+			editStepFrequency(routines, stepOption, newFreq);
+			cout << endl << "Step Frequency Updated" << endl;
 			break;
 		case 4:
 			break;
@@ -497,7 +510,7 @@ void editRoutine(Routine* routines, int numRoutines)
 	}
 }
 
-void editStepDescription(Routine* routines, int stepOption, string description)
+void editStepDescription(Routine* routines, int stepOption, string newDes)
 {
 	int option;
 
@@ -510,5 +523,21 @@ void editStepDescription(Routine* routines, int stepOption, string description)
 		current->next;
 	}
 
-	current->item.description = description;
+	current->item.description = newDes;
+}
+
+void editStepFrequency(Routine* routines, int stepOption, int newFreq)
+{
+	int option;
+
+	Node* current = routines[stepOption - 1].steps;
+
+	int oldFreq = current->item.frequency;
+
+	for (int i = 1; i < stepOption; i++)
+	{
+		current->next;
+	}
+
+	current->item.frequency = newFreq;
 }
