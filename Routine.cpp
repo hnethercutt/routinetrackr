@@ -435,6 +435,7 @@ void viewSteps(Routine* routines, int numRoutines, int option)
 
 void editRoutine(Routine* routines, int numRoutines)
 {
+	ofstream outFile;
 	int option;
 	int editOption;
 	int stepOption;
@@ -463,11 +464,18 @@ void editRoutine(Routine* routines, int numRoutines)
 		switch (editOption)
 		{
 		case 1:
+			// I'll do write to file for everything once I get this working properly
+			outFile.open("Routines.txt");
+
 			cout << "Enter a New Title: ";
 			cin.ignore();
 			getline(cin, routines[option - 1].title);
-			
+
+			outFile << routines[option - 1].title;
+
 			cout << endl << "Title Updated" << endl;
+
+			outFile.close();
 			break;
 		case 2:
 			viewSteps(routines, numRoutines, option);
