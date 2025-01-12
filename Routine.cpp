@@ -456,7 +456,9 @@ void editRoutine(Routine* routines, int numRoutines)
 		{
 		case 1:
 			cout << "Enter a New Title: ";
-			cin >> routines[option - 1].title;
+			cin.ignore();
+			getline(cin, routines[option - 1].title);
+			
 			cout << endl << "Title Updated" << endl;
 			break;
 		case 2:
@@ -491,7 +493,8 @@ void editStepDescription(Routine* routines, int stepOption)
 	Node* current = routines[stepOption - 1].steps;
 
 	cout << "Enter the New Step Description: ";
-	cin >> newDes;
+	cin.ignore();
+	getline(cin, newDes);
 
 	string oldDes = current->item.description;
 
