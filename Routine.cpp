@@ -42,7 +42,7 @@ struct Routine
 
 Routine* getRoutines(int& numRoutines);
 void getSteps(Routine* routines);
-void newRoutine();
+void newRoutine(Routine* routines);
 void viewTitles(Routine* routines, int numRoutines);
 void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
@@ -85,7 +85,7 @@ int main()
 		switch (option)
 		{
 		case 1:
-			newRoutine();
+			newRoutine(routines);
 			break;
 		case 2:
 			viewRoutine(routines, numRoutines);
@@ -175,27 +175,32 @@ void getSteps(Routine* routines)
 	}
 }
 
-void newRoutine()
+void newRoutine(Routine* routines)
 {
-	// Text added to the file will be appended 
-	ofstream outFile("Routines.txt", ios::app);
-
-	if (!outFile)
-	{
-		cerr << "ERROR: File cannot be opened.";
-	}
-
+	ofstream outFile;
 	bool newRoutine = true;
 	string input;
 
 	while (newRoutine)
 	{
+		// Text added to the file will be appended 
+		outFile.open("Routines.txt", ios::app);
+
+		if (!outFile)
+		{
+			cerr << "ERROR: File cannot be opened.";
+		}
+
 		cout << "Please enter a name for your new routine: ";
 		// Ensures any input with whitespace will be read completely
 		cin.ignore();
 		getline(cin, input);
 
 		outFile << input << "\n";
+
+		outFile.close();
+
+		outFile.open("Steps.txt", ios::app);
 
 		bool newStep = true;
 
@@ -207,6 +212,12 @@ void newRoutine()
 
 			if (input == "Y" || input == "y")
 			{
+				cout << "Please enter a description for this step: ";
+				cin.ignore();
+				getline(cin, input);
+
+				outFile << input << "\n";
+
 				int numInput = 0;
 
 				// Error handling. Maintains an infinite loop until the user gives valid input
@@ -275,13 +286,14 @@ void newRoutine()
 							<< "To choose multiple days, enter the numbers together (ex: 123): ";
 						cin >> numInput;
 
-						outFile << numInput;
+						outFile << numInput << endl;
 						break;
 					}
 				}
 			}
 			else if (input == "N" || input == "n")
 			{
+				outFile << "*\n";
 				newStep = false;
 			}
 			else
@@ -295,6 +307,8 @@ void newRoutine()
 		cin >> input;
 
 		newRoutine = (input == "Y" || input == "y");
+
+		outFile.close();
 	}
 }
 
@@ -488,7 +502,7 @@ void editStepDescription(Routine* routines, int stepOption, string description)
 	int option;
 
 	Node* current = routines[stepOption - 1].steps;
-
+	
 	string oldDes = current->item.description;
 
 	for (int i = 1; i < stepOption; i++)
