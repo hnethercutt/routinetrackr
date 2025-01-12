@@ -48,6 +48,7 @@ void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
 void viewAllRoutines(Routine* routines, int numRoutines);
 void editRoutine(Routine* routines, int numRoutines);
+void editStepDescription(Routine* routines, int stepOption);
 
 int main()
 {
@@ -460,11 +461,12 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << endl << "Title Changed" << endl;
 			break;
 		case 2:
-			/* Need to finish this
 			viewSteps(routines, numRoutines, option);
 
-			cout << "Which step would you like to edit?: " << endl;
-			cin >> stepOption;*/
+			cout << "Which step would you like to edit?: ";
+			cin >> stepOption;
+
+			editStepDescription(routines, stepOption);
 			break;
 		case 3:
 			break;
@@ -476,4 +478,28 @@ void editRoutine(Routine* routines, int numRoutines)
 
 		}
 	}
+}
+
+void editStepDescription(Routine* routines, int stepOption)
+{
+	int option;
+	string newDes;
+
+	Node* current = routines[stepOption - 1].steps;
+
+	cout << "Enter the New Step Description: ";
+	cin >> newDes;
+
+	string oldDes = current->item.description;
+
+	for (int i = 1; i < stepOption; i++)
+	{
+		current->next;
+	}
+
+	current->item.description = newDes;
+
+	cout << endl << "Step description changed" << endl
+		<< "Enter 0 to Return to Main Menu: ";
+	cin >> option;
 }
