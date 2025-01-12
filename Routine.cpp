@@ -48,7 +48,7 @@ void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
 void viewAllRoutines(Routine* routines, int numRoutines);
 void editRoutine(Routine* routines, int numRoutines);
-void editStepDescription(Routine* routines, int stepOption);
+void editStepDescription(Routine* routines, int stepOption, string newDes);
 
 int main()
 {
@@ -207,13 +207,6 @@ void newRoutine()
 
 			if (input == "Y" || input == "y")
 			{
-				cout << "Please enter a description for this step: ";
-
-				cin.ignore();
-				getline(cin, input);
-
-				outFile << input << "\n";
-
 				int numInput = 0;
 
 				// Error handling. Maintains an infinite loop until the user gives valid input
@@ -432,6 +425,7 @@ void editRoutine(Routine* routines, int numRoutines)
 	int editOption;
 	int stepOption;
 	string newTitle;
+	string newDes;
 
 	cout << "Which routine would you like to edit?" << endl;
 	viewTitles(routines, numRoutines);
@@ -467,7 +461,11 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << "Which step would you like to edit?: ";
 			cin >> stepOption;
 
-			editStepDescription(routines, stepOption);
+			cout << "Enter the New Step Description: ";
+			cin.ignore();
+			getline(cin, newDes);
+
+			editStepDescription(routines, stepOption, newDes);
 			cout << endl << "Step Description Updated" << endl;
 			break;
 		case 3:
@@ -485,16 +483,11 @@ void editRoutine(Routine* routines, int numRoutines)
 	}
 }
 
-void editStepDescription(Routine* routines, int stepOption)
+void editStepDescription(Routine* routines, int stepOption, string description)
 {
 	int option;
-	string newDes;
 
 	Node* current = routines[stepOption - 1].steps;
-
-	cout << "Enter the New Step Description: ";
-	cin.ignore();
-	getline(cin, newDes);
 
 	string oldDes = current->item.description;
 
@@ -503,5 +496,5 @@ void editStepDescription(Routine* routines, int stepOption)
 		current->next;
 	}
 
-	current->item.description = newDes;
+	current->item.description = description;
 }
