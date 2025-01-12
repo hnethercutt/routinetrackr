@@ -46,6 +46,7 @@ void newRoutine();
 void viewTitles(Routine* routines, int numRoutines);
 void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
+void viewAllRoutines(Routine* routines, int numRoutines);
 void editRoutine(Routine* routines, int numRoutines);
 
 int main()
@@ -319,14 +320,58 @@ void viewRoutine(Routine* routines, int numRoutines)
 	}
 	else if (option = numRoutines + 1)
 	{
-		for (int i = 1; i <= numRoutines; i++)
-		{
-			viewSteps(routines, numRoutines, i);
-		}
+		viewAllRoutines(routines, numRoutines);
 	}
 
 	cout << "Enter 0 to Return to the Main Menu: ";
 	cin >> option;
+}
+
+void viewAllRoutines(Routine* routines, int numRoutines)
+{
+	system("cls");
+
+	for (int i = 0; i < numRoutines; i++)
+	{
+		Node* current = routines[i].steps;
+		Node* temp = current;
+
+		cout << "Routine: " << routines[i].title << endl;
+
+		// Displays each step of the routine(s)
+		if (current == NULL)
+		{
+			cout << "This routine has no steps." << endl;
+		}
+		else
+		{
+			int stepCount = 1;
+
+			while (current != NULL)
+			{
+				cout << stepCount << ". " << current->item.description << endl
+					<< "To be completed " << current->item.frequency << " times per day." << endl
+					<< ((current->item.weekly == 1) ? "Repeats weekly" : "Does not repeat") << endl
+					<< ((current->item.daily == 1) ? "Repeats daily" : "Repeats on: ") << endl;
+
+				if (current->item.daily == 0)
+				{
+					int temp = current->item.days;
+
+					while (temp != 0)
+					{
+						int day = temp % 10;
+						cout << daysOfWeek[day - 1] << endl;
+						temp /= 10;
+					}
+				}
+				current = current->next;
+				stepCount++;
+			}
+		}
+
+		cout << endl;
+	}
 }
 
 void viewTitles(Routine* routines, int numRoutines)
@@ -337,7 +382,6 @@ void viewTitles(Routine* routines, int numRoutines)
 	}
 }
 
-// Need to fix this because view all isn't working
 void viewSteps(Routine* routines, int numRoutines, int option)
 {
 	system("cls");
