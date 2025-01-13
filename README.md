@@ -6,6 +6,7 @@ A console app that will allow you to create and keep track of your daily routine
 ## TO DO LIST
 
 - [ ] Make newRoutine function cleaner
+- [ ] newRoutine writes to file, need to make it save to the linked list
 - [ ] Add error handling for choosing days in newRoutine function
 - [ ] Create function for deleting routines or steps in a routine
 - [X] Create function for viewing routines
