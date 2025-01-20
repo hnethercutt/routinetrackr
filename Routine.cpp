@@ -51,6 +51,8 @@ void editRoutine(Routine* routines, int numRoutines);
 void editStepDescription(Routine* routines, int stepOption, string newDes);
 void editStepFrequency(Routine* routines, int stepOption, int newFreq);
 void editStepWeekly(Routine* routines, int stepOption, int newWeekly);
+void editStepDaily(Routine* routines, int stepOption, int newDaily);
+void editStepDays(Routine* routines, int stepOption, int newDays);
 
 int main()
 {
@@ -523,6 +525,25 @@ void editRoutine(Routine* routines, int numRoutines)
 			cout << endl << "Weekly Repeat Updated" << endl;
 			break;
 		case 5:
+			viewSteps(routines, numRoutines, option);
+
+			cout << "Which step would you like to edit?: ";
+			cin >> stepOption;
+
+			cout << "Repeat this step daily? Enter Y for Yes or N for No: ";
+			cin >> newRep;
+
+			if (newRep == 'Y' || newRep == 'y')
+			{
+				editStepDaily(routines, stepOption, 1);
+			}
+			if (newRep == 'N' || newRep == 'n')
+			{
+				editStepDaily(routines, stepOption, 0);
+				editStepDays(routines, stepOption, 0);
+			}
+
+			cout << endl << "Weekly Repeat Updated" << endl;
 			break;
 		case 6: break;
 
@@ -573,4 +594,45 @@ void editStepWeekly(Routine* routines, int stepOption, int newWeekly)
 	}
 
 	current->item.weekly = newWeekly;
+}
+
+void editStepDaily(Routine* routines, int stepOption, int newDaily)
+{
+	Node* current = routines[stepOption - 1].steps;
+
+	int oldWeekly = current->item.daily;
+
+	for (int i = 1; i < stepOption; i++)
+	{
+		current->next;
+	}
+
+	current->item.daily = newDaily;
+}
+
+void editStepDays(Routine* routines, int stepOption, int newDays)
+{
+	int numInput;
+
+	Node* current = routines[stepOption - 1].steps;
+
+	int oldDays = current->item.days;
+
+	cout << "One which days should this step be repeated?" << endl
+		<< "1. Sunday" << endl
+		<< "2. Monday" << endl
+		<< "3. Tuesday" << endl
+		<< "4. Wednesday" << endl
+		<< "5. Thursday" << endl
+		<< "6. Friday" << endl
+		<< "7. Saturday" << endl
+		<< "To choose multiple days, enter the numbers together (ex: 123): ";
+	cin >> numInput;
+
+	for (int i = 1; i < stepOption; i++)
+	{
+		current->next;
+	}
+
+	current->item.days = newDays;
 }
