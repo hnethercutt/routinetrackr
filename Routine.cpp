@@ -197,9 +197,7 @@ void newRoutine(Routine* routines, int numRoutines)
 
 	while (newRoutine)
 	{
-		cout << "Please enter a name for your new routine: ";
-		// Ensures any input with whitespace will be read completely
-		
+		cout << "Please enter a name for your new routine: ";		
 		cin.ignore();
 		getline(cin, title);
 
