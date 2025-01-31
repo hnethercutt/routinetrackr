@@ -49,6 +49,7 @@ void viewTitles(Routine* routines, int numRoutines);
 void viewSteps(Routine* routines, int numRoutines, int option);
 void viewRoutine(Routine* routines, int numRoutines);
 void viewAllRoutines(Routine* routines, int numRoutines);
+void deleteRoutine(Routine* routines, int numRoutines);
 
 int main()
 {
@@ -91,6 +92,7 @@ int main()
 			viewRoutine(routines, numRoutines);
 			break;
 		case 3:
+			deleteRoutine(routines, numRoutines);
 			break;
 		case 4:
 			break;
@@ -438,5 +440,38 @@ void viewSteps(Routine* routines, int numRoutines, int option)
 			cout << endl;
 		}
 	}
+}
+
+void deleteRoutine(Routine* routines, int numRoutines)
+{
+	ofstream outFile("Routines.txt");
+
+	if (!outFile)
+	{
+		cerr << "ERROR: File cannot be opened.";
+		exit(1);
+	}
+
+	viewTitles(routines, numRoutines);
+
+	int option;
+
+	cout << "Choose a Routine to Delete: ";
+	cin >> option;
+
+	outFile << "START" << endl;
+
+	for (int i = 0; i < numRoutines; i++)
+	{
+		if (i == (option - 1))
+		{
+			i++;
+		}
+
+		outFile << routines[i].title << endl;
+	}
+
+	outFile.close();
+
 }
 
